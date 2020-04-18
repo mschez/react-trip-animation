@@ -1,0 +1,83 @@
+{
+  "name": "react-trip-animation",
+  "version": "0.0.1",
+  "description": "A powerful component to create trip animations",
+  "main": "src/index.js",
+  "scripts": {
+    "build:demo": "./node_modules/.bin/webpack --config webpack.config.demo.js  --colors --progress",
+    "build:prod": "./node_modules/.bin/webpack --config webpack.config.prod.js --colors --progress",
+    "dev": "webpack-dev-server --config webpack.config.dev.js --hot --inline",
+    "build:all": "npm run build:demo && npm run build:prod",
+    "postversion": "git push && git push --tags && npm publish",
+    "version": "auto-changelog -p && git add CHANGELOG.md && npm run build:all && git add -A ./dist/ ./public"
+  },
+  "engines": {
+    "node": "12.x",
+    "npm": "6.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mschez/react-trip-animation.git"
+  },
+  "keywords": [
+    "animation",
+    "cities",
+    "destination",
+    "fly",
+    "journey",
+    "leaflet",
+    "map",
+    "origin",
+    "place",
+    "plane",
+    "react",
+    "svg",
+    "travel",
+    "trip"
+  ],
+  "author": {
+    "name": "Miguel Sánchez",
+    "email": "mschezes@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mschez/react-trip-animation/issues"
+  },
+  "homepage": "https://github.com/mschez/react-trip-animation#readme",
+  "dependencies": {
+    "leaflet": "^1.6.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-leaflet": "^2.7.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/plugin-proposal-object-rest-spread": "^7.9.6",
+    "@babel/plugin-transform-runtime": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
+    "@babel/register": "^7.9.0",
+    "@hot-loader/react-dom": "^16.13.0",
+    "auto-changelog": "^2.0.0",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.5.3",
+    "eslint": "^7.0.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-import-resolver-webpack": "^0.12.1",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.19.0",
+    "react-addons-test-utils": "^15.6.2",
+    "react-hot-loader": "4.12.21",
+    "resolve-url-loader": "^3.1.1",
+    "style-loader": "^1.2.1",
+    "url-loader": "^4.1.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "3.11.0",
+    "webpack-merge": "^4.2.2"
+  }
+}
