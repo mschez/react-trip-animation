@@ -2,7 +2,7 @@
   "name": "react-trip-animation",
   "version": "0.1.0",
   "description": "A powerful component to create trip animations",
-  "main": "src/index.js",
+  "main": "dist/TripAnimation.js",
   "scripts": {
     "build:demo": "./node_modules/.bin/webpack --config webpack.config.demo.js  --colors --progress",
     "build:prod": "./node_modules/.bin/webpack --config webpack.config.prod.js --colors --progress",
@@ -44,11 +44,13 @@
     "url": "https://github.com/mschez/react-trip-animation/issues"
   },
   "homepage": "https://github.com/mschez/react-trip-animation#readme",
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
   "dependencies": {
     "leaflet": "^1.6.0",
     "prop-types": "^15.7.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
     "react-leaflet": "^2.7.0"
   },
   "devDependencies": {
@@ -69,8 +71,10 @@
     "eslint-loader": "^4.0.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react": "^7.20.0",
     "react-addons-test-utils": "^15.6.2",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
     "react-hot-loader": "4.12.21",
     "resolve-url-loader": "^3.1.1",
     "style-loader": "^1.2.1",
