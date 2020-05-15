@@ -7,16 +7,18 @@ module.exports = merge(
   baseConfig,
   {
     entry: ['./src/index.js'],
+    externals: {
+      react: 'react',
+    },
     mode: 'production',
     optimization: {
       minimize: true,
     },
     output: {
-      filename: './dist/index.js',
+      filename: './dist/TripAnimation.js',
       library: 'TripAnimation',
-      libraryTarget: 'umd',
+      libraryTarget: 'commonjs2',
       path: __dirname,
-      umdNamedDefine: true,
     },
   },
 );
