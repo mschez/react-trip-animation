@@ -74,8 +74,6 @@ export default L.Path.extend({
   getMidPoint(from, to, deep = 8, roundSide) {
     let offset = 3.14;
 
-    console.log(roundSide);
-
     if (
       roundSide === 'RIGHT_ROUND'
       || (!roundSide && from[1] > to[1])
