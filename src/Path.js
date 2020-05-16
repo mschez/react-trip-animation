@@ -213,7 +213,10 @@ export default L.Path.extend({
     return new Promise((resolve) => {
       const animateEnd = () => {
         this._finalUpdate = true;
-        this.icon.setAttribute('visibility', 'hidden');
+
+        if (this.icon) {
+          this.icon.setAttribute('visibility', 'hidden');
+        }
 
         resolve();
       };
@@ -222,7 +225,10 @@ export default L.Path.extend({
 
       setTimeout(
         () => {
-          this.icon.setAttribute('visibility', 'visible');
+          if (this.icon) {
+            this.icon.setAttribute('visibility', 'visible');
+          }
+
           this._renderer._updatecurve(this);
           this.animate.beginElement();
         },
