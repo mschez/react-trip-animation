@@ -20,7 +20,7 @@ L.SVG.include({
 
     return str || 'M0 0';
   },
-  _updatecurve(layer) {
+  _updateCurve(layer) {
     const svgPath = this._curvePointsToPath(layer._points);
 
     this.options = { padding: 1 };

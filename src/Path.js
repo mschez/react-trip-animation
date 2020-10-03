@@ -33,7 +33,7 @@ export default L.Path.extend({
   _repaint() {
     if (!this._initialUpdate) {
       if (this._finalUpdate) {
-        this._renderer._updatecurve(this);
+        this._renderer._updateCurve(this);
       }
 
       const d = this._renderer._curvePointsToPath(this._points);
@@ -229,7 +229,7 @@ export default L.Path.extend({
             this.icon.setAttribute('visibility', 'visible');
           }
 
-          this._renderer._updatecurve(this);
+          this._renderer._updateCurve(this);
           this.animate.beginElement();
         },
         this.options.delay || 0,
