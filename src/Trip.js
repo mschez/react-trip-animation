@@ -2,8 +2,11 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 
-const SEGMENT = 'segment';
 const ALL = 'all';
+const CANVAS = 'canvas';
+const SEGMENT = 'segment';
+const SVG = 'svg';
+
 let Path = null;
 let Map = null;
 let TileLayer = null;
@@ -17,6 +20,7 @@ const Trip = ({
   height,
   in: inProp,
   mode,
+  renderer,
   reset,
   tile,
   width,
@@ -200,8 +204,13 @@ const Trip = ({
 
   useEffect(
     () => {
-      // eslint-disable-next-line global-require
-      require('./SVG');
+      if (renderer === 'SVG') {
+        // eslint-disable-next-line global-require
+        require('./SVG');
+      } else {
+        // eslint-disable-next-line global-require
+        require('./Canvas');
+      }
       // eslint-disable-next-line global-require
       require('leaflet/dist/leaflet.css');
       // eslint-disable-next-line global-require
@@ -257,6 +266,7 @@ Trip.propTypes = {
   height: PropTypes.string,
   in: PropTypes.bool,
   mode: PropTypes.oneOf([SEGMENT, ALL]),
+  renderer: PropTypes.oneOf([SVG, CANVAS]),
   reset: PropTypes.bool,
   tile: PropTypes.string,
   width: PropTypes.string,
@@ -270,6 +280,7 @@ Trip.defaultProps = {
   height: '400px',
   in: true,
   mode: ALL,
+  renderer: SVG,
   reset: true,
   tile: 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png',
   width: '100%',
