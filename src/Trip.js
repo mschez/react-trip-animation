@@ -1,18 +1,12 @@
 /* eslint-disable no-underscore-dangle */
-import { Map, TileLayer } from 'react-leaflet';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import L from 'leaflet';
-
-import Path from './Path';
-
-import './SVG';
-
-import 'leaflet/dist/leaflet.css';
-import './Trip.css';
 
 const SEGMENT = 'segment';
 const ALL = 'all';
+let Path = null;
+let Map = null;
+let TileLayer = null;
 
 const Trip = ({
   children,
@@ -27,6 +21,7 @@ const Trip = ({
   tile,
   width,
 }) => {
+  const [isBrowser, setIsBrowser] = useState(false);
   const [current, setCurrent] = useState(null);
   const [group, setGroup] = useState(null);
   const map = useRef(null);
@@ -113,27 +108,34 @@ const Trip = ({
 
   useEffect(
     () => {
-      const journeys = computeJourneys();
-      const layerGroup = L.layerGroup(journeys);
+      if (isBrowser) {
+        // eslint-disable-next-line global-require
+        const L = require('leaflet');
+        const journeys = computeJourneys();
+        const layerGroup = L.layerGroup(journeys);
 
-      layerGroup.addTo(map.current.leafletElement);
-      setGroup(layerGroup);
+        if (map.current) {
+          layerGroup.addTo(map.current.leafletElement);
+        }
+
+        setGroup(layerGroup);
+      }
     },
-    [],
+    [isBrowser, map.current],
   );
 
   useEffect(
     () => {
-      if (fitWorld) {
+      if (fitWorld && map.current) {
         map.current.leafletElement.fitWorld();
       }
     },
-    [group],
+    [group, map.current],
   );
 
   useEffect(
     () => {
-      if (inProp) {
+      if (inProp && map.current) {
         setTimeout(
           () => {
             map.current.leafletElement.once('moveend', () => {
@@ -156,14 +158,14 @@ const Trip = ({
         );
       }
     },
-    [inProp],
+    [inProp, map.current],
   );
 
   useEffect(
     () => {
       const layers = group && group.getLayers();
 
-      if (layers && layers[current]) {
+      if (layers && layers[current] && map.current) {
         map.current.leafletElement.once('moveend', () => {
           layers[current].start().then(() => setCurrent(current + 1));
         });
@@ -180,7 +182,7 @@ const Trip = ({
         } else {
           layers[current].start().then(() => setCurrent(current + 1));
         }
-      } else if (current && !layers[current] && reset) {
+      } else if (current && !layers[current] && map.current && reset) {
         if (fitWorld) {
           map.current.leafletElement.fitWorld();
         } else {
@@ -193,7 +195,25 @@ const Trip = ({
         }
       }
     },
-    [current],
+    [current, map.current],
+  );
+
+  useEffect(
+    () => {
+      // eslint-disable-next-line global-require
+      require('./SVG');
+      // eslint-disable-next-line global-require
+      require('leaflet/dist/leaflet.css');
+      // eslint-disable-next-line global-require
+      require('./Trip.css');
+      // eslint-disable-next-line global-require
+      (Path = require('./Path').default);
+      // eslint-disable-next-line global-require
+      ({ Map, TileLayer } = require('react-leaflet'));
+
+      setIsBrowser(true);
+    },
+    [],
   );
 
   return (
@@ -201,27 +221,29 @@ const Trip = ({
       className={className}
       style={{ height, width }}
     >
-      <Map
-        attributionControl={false}
-        bounds={bounds}
-        boxZoom={false}
-        doubleClickZoom={false}
-        dragging={false}
-        keyboard={false}
-        ref={map}
-        scrollWheelZoom={false}
-        tap={false}
-        touchZoom={false}
-        useFlyTo
-        zoomControl={false}
-      >
-        <TileLayer
-          url={tile}
-        />
-        <>
-          {children}
-        </>
-      </Map>
+      {isBrowser && Map && TileLayer && (
+        <Map
+          attributionControl={false}
+          bounds={bounds}
+          boxZoom={false}
+          doubleClickZoom={false}
+          dragging={false}
+          keyboard={false}
+          ref={map}
+          scrollWheelZoom={false}
+          tap={false}
+          touchZoom={false}
+          useFlyTo
+          zoomControl={false}
+        >
+          <TileLayer
+            url={tile}
+          />
+          <>
+            {children}
+          </>
+        </Map>
+      )}
     </div>
   );
 };

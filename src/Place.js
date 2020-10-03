@@ -1,15 +1,30 @@
-import { Marker } from 'react-leaflet';
-import L from 'leaflet';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
+
+let Marker = null;
+let L = null;
 
 const Place = ({
   markerIcon: MarkerIcon,
   markerAnchor,
   position,
 }) => {
-  if (MarkerIcon) {
+  const [isBrowser, setIsBrowser] = useState(false);
+
+  useEffect(
+    () => {
+      // eslint-disable-next-line global-require
+      ({ Marker } = require('react-leaflet'));
+      // eslint-disable-next-line global-require
+      ({ L } = require('leaflet'));
+
+      setIsBrowser(true);
+    },
+    [],
+  );
+
+  if (isBrowser && MarkerIcon) {
     const icon = L.divIcon({
       className: 'custom-icon',
       html: ReactDOMServer.renderToString(MarkerIcon),
